@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ===== Страница ===== -->
+    <Style x:Key="PageStyle" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AppBackgroundColor}, Dark={StaticResource AppBackgroundColorDark}}" />
+    </Style>
+
+    <!-- ===== Текст ===== -->
+    <Style x:Key="TitleLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AppPrimaryColor}, Dark={StaticResource AppPrimaryColorDark}}" />
+        <Setter Property="FontSize" Value="{StaticResource TitleFontSize}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="BodyLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AppTextColor}, Dark={StaticResource AppTextColorDark}}" />
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
+
+    <Style x:Key="SecondaryLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AppMutedTextColor}, Dark={StaticResource AppMutedTextColorDark}}" />
+        <Setter Property="FontSize" Value="{StaticResource SecondaryFontSize}" />
+    </Style>
+
+    <!-- Наследование: название задачи = обычный текст + жирное начертание -->
+    <Style x:Key="TaskTitleLabelStyle" TargetType="Label"
+           BasedOn="{StaticResource BodyLabelStyle}">
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <!-- ===== Кнопка ===== -->
+    <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AppPrimaryColor}, Dark={StaticResource AppPrimaryColorDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AppOnPrimaryColor}, Dark={StaticResource AppOnPrimaryColorDark}}" />
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.8" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AppBorderColor}, Dark={StaticResource AppBorderColorDark}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- ===== Элементы ввода ===== -->
+    <Style x:Key="EntryStyle" TargetType="Entry">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AppTextColor}, Dark={StaticResource AppTextColorDark}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource AppMutedTextColor}, Dark={StaticResource AppMutedTextColorDark}}" />
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}" />
+    </Style>
+
+    <Style x:Key="PickerStyle" TargetType="Picker">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AppTextColor}, Dark={StaticResource AppTextColorDark}}" />
+        <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource AppMutedTextColor}, Dark={StaticResource AppMutedTextColorDark}}" />
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}" />
+    </Style>
+
+    <Style x:Key="SwitchStyle" TargetType="Switch">
+        <Setter Property="OnColor" Value="{StaticResource AppSecondaryColor}" />
+    </Style>
+
+    <Style x:Key="TaskCheckBoxStyle" TargetType="CheckBox">
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource AppPrimaryColor}, Dark={StaticResource AppPrimaryColorDark}}" />
+    </Style>
+
+    <!-- ===== Карточка задачи ===== -->
+    <Style x:Key="TaskCardStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AppCardColor}, Dark={StaticResource AppCardColorDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource AppBorderColor}, Dark={StaticResource AppBorderColorDark}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Padding" Value="{StaticResource CardPadding}" />
+        <Setter Property="Margin" Value="{StaticResource CardMargin}" />
+    </Style>
+
+</ResourceDictionary>

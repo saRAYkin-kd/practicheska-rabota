@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Основной цвет бренда -->
+    <Color x:Key="AppPrimaryColor">#3949AB</Color>
+
+    <!-- Дополнительный (акцентный) цвет -->
+    <Color x:Key="AppSecondaryColor">#F9A826</Color>
+
+    <!-- Цвета текста -->
+    <Color x:Key="AppTextColor">#1F2937</Color>
+    <Color x:Key="AppMutedTextColor">#5B6472</Color>
+    <Color x:Key="AppOnPrimaryColor">#FFFFFF</Color>
+
+    <!-- Фон страницы, карточки и границы -->
+    <Color x:Key="AppBackgroundColor">#F4F6FB</Color>
+    <Color x:Key="AppCardColor">#FFFFFF</Color>
+    <Color x:Key="AppBorderColor">#D5DBE8</Color>
+    <!-- ===== Тёмная тема ===== -->
+    <Color x:Key="AppPrimaryColorDark">#8C9EFF</Color>
+    <Color x:Key="AppTextColorDark">#F1F5F9</Color>
+    <Color x:Key="AppMutedTextColorDark">#A8B3C7</Color>
+    <Color x:Key="AppOnPrimaryColorDark">#10162B</Color>
+    <Color x:Key="AppBackgroundColorDark">#121826</Color>
+    <Color x:Key="AppCardColorDark">#1E2638</Color>
+    <Color x:Key="AppBorderColorDark">#34405A</Color>
+</ResourceDictionary>

@@ -4,7 +4,7 @@ namespace TaskManager;
 
 public partial class MainPage : ContentPage
 {
-    private readonly List<MyTaskItem> _tasks = new();
+    private readonly List<MyTaskItems> _tasks = new();
     private int _nextId = 1;
 
     public MainPage()
@@ -17,17 +17,24 @@ public partial class MainPage : ContentPage
         LoadTestData();
         RefreshList();
     }
+    // Переключение темы вручную
+    private void OnDarkThemeToggled(object? sender, ToggledEventArgs e)
+    {
+        if (Application.Current is null)
+            return;
 
+        Application.Current.UserAppTheme = e.Value ? AppTheme.Dark : AppTheme.Light;
+    }
     // Временная коллекция тестовых задач
     private void LoadTestData()
     {
-        _tasks.Add(new MyTaskItem { Id = _nextId++, Title = "Изучить XAML",
+        _tasks.Add(new MyTaskItems { Id = _nextId++, Title = "Изучить XAML",
             Priority = TaskPriority.Low, CreatedAt = DateTime.Now.AddDays(-2), IsCompleted = true });
-        _tasks.Add(new MyTaskItem { Id = _nextId++, Title = "Выполнить практическую работу",
+        _tasks.Add(new MyTaskItems { Id = _nextId++, Title = "Выполнить практическую работу",
             Priority = TaskPriority.High, CreatedAt = DateTime.Now });
-        _tasks.Add(new MyTaskItem { Id = _nextId++, Title = "Повторить C#",
+        _tasks.Add(new MyTaskItems { Id = _nextId++, Title = "Повторить C#",
             Priority = TaskPriority.Medium, CreatedAt = DateTime.Now.AddDays(-1) });
-        _tasks.Add(new MyTaskItem { Id = _nextId++, Title = "Подготовить проект",
+        _tasks.Add(new MyTaskItems { Id = _nextId++, Title = "Подготовить проект",
             Priority = TaskPriority.Low, CreatedAt = DateTime.Now });
     
     }
@@ -47,7 +54,7 @@ public partial class MainPage : ContentPage
         if (string.IsNullOrEmpty(title))
             return;
 
-        _tasks.Add(new MyTaskItem
+        _tasks.Add(new MyTaskItems
         {
             Id = _nextId++,
             Title = title,

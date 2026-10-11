@@ -3,23 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:TaskManager.Models"
              x:Class="TaskManager.MainPage"
+             Style="{StaticResource PageStyle}"
              Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="Auto,Auto,*"
           RowSpacing="12"
-          Padding="16">
+          Padding="{StaticResource PagePadding}">
 
         <!-- Строка 0: заголовок -->
         <VerticalStackLayout Grid.Row="0" Spacing="2">
             <Label Text="Task Manager"
-                   FontSize="28"
-                   FontAttributes="Bold" />
+                   Style="{StaticResource TitleLabelStyle}" />
             <Label Text="Список задач"
-                   FontSize="14"
-                   TextColor="Gray" />
+                   Style="{StaticResource SecondaryLabelStyle}" />
         </VerticalStackLayout>
-
-        <!-- Строка 1: ввод, кнопка, переключатель -->
+        
+        <!-- Строка 1: ввод, кнопка, приоритет, переключатель -->
         <VerticalStackLayout Grid.Row="1" Spacing="8">
 
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
@@ -27,80 +26,107 @@
                        Grid.Column="0"
                        Placeholder="Введите задачу"
                        ReturnType="Done"
+                       Style="{StaticResource EntryStyle}"
                        Completed="OnAddClicked" />
                 <Button Grid.Column="1"
                         Text="Добавить"
+                        Style="{StaticResource PrimaryButtonStyle}"
                         Clicked="OnAddClicked" />
             </Grid>
 
+            <Picker x:Name="PriorityPicker"
+                    Title="Приоритет"
+                    Style="{StaticResource PickerStyle}" />
+
             <HorizontalStackLayout Spacing="8">
                 <Switch x:Name="HideCompletedSwitch"
+                        Style="{StaticResource SwitchStyle}"
                         Toggled="OnHideCompletedToggled" />
                 <Label Text="Скрыть выполненные"
+                       Style="{StaticResource BodyLabelStyle}"
                        VerticalOptions="Center" />
             </HorizontalStackLayout>
-            <Picker x:Name="PriorityPicker"
-                    Title="Приоритет" />
             
+            <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Start">
+                <Label Text="Тёмная"
+                       Style="{StaticResource SecondaryLabelStyle}"
+                       VerticalOptions="Center" />
+                <Switch x:Name="DarkThemeSwitch"
+                        Style="{StaticResource SwitchStyle}"
+                        Toggled="OnDarkThemeToggled" />
+            </HorizontalStackLayout>
+
+
         </VerticalStackLayout>
 
-        <!-- Строка 2: список (одновременно область прокрутки) -->
+        <!-- Строка 2: список задач (область прокрутки) -->
         <CollectionView x:Name="TasksView"
                         Grid.Row="2"
                         SelectionMode="None">
-
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:MyTaskItem">
-                    <Border Margin="0,4"
-                            Padding="0"
-                            Stroke="Gray"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 8">
+    <DataTemplate x:DataType="models:MyTaskItems">
 
-                        <Grid ColumnDefinitions="6,Auto,*" ColumnSpacing="8">
+        <Border Style="{StaticResource TaskCardStyle}">
 
-                            <!-- Цветовая индикация приоритета -->
-                            <BoxView Grid.Column="0"
-                                     Color="{Binding PriorityColor}" />
+            <!-- Визуальное выделение: тень -->
+            <Border.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.12"
+                        Radius="8"
+                        Offset="0,2" />
+            </Border.Shadow>
 
-                            <CheckBox Grid.Column="1"
-                                      IsChecked="{Binding IsCompleted}"
-                                      VerticalOptions="Center" />
+            <!-- Выполненная задача становится бледнее -->
+            <Border.Triggers>
+                <DataTrigger TargetType="Border"
+                             Binding="{Binding IsCompleted}"
+                             Value="True">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Border.Triggers>
 
-                            <VerticalStackLayout Grid.Column="2"
-                                                 Padding="0,8,8,8"
-                                                 Spacing="2">
+            <Grid ColumnDefinitions="6,Auto,*" ColumnSpacing="10">
 
-                                <Label Text="{Binding Title}"
-                                       FontSize="16"
-                                       LineBreakMode="WordWrap">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label"
-                                                     Binding="{Binding IsCompleted}"
-                                                     Value="True">
-                                            <Setter Property="TextDecorations" Value="Strikethrough" />
-                                            <Setter Property="TextColor" Value="Gray" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
+                <!-- Цветовая индикация приоритета -->
+                <BoxView Grid.Column="0"
+                         Color="{Binding PriorityColor}"
+                         CornerRadius="3" />
 
-                                <HorizontalStackLayout Spacing="8">
-                                    <Label Text="{Binding PriorityText, StringFormat='Приоритет: {0}'}"
-                                           FontSize="12"
-                                           TextColor="{Binding PriorityColor}" />
-                                    <Label Text="{Binding CreatedAt, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
-                                           FontSize="12"
-                                           TextColor="Gray" />
-                                </HorizontalStackLayout>
+                <CheckBox Grid.Column="1"
+                          IsChecked="{Binding IsCompleted}"
+                          Style="{StaticResource TaskCheckBoxStyle}"
+                          VerticalOptions="Center" />
 
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                <VerticalStackLayout Grid.Column="2" Spacing="2">
 
+                    <Label Text="{Binding Title}"
+                           Style="{StaticResource TaskTitleLabelStyle}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsCompleted}"
+                                         Value="True">
+                                <Setter Property="TextDecorations" Value="Strikethrough" />
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource AppMutedTextColor}, Dark={StaticResource AppMutedTextColorDark}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="{Binding PriorityText, StringFormat='Приоритет: {0}'}"
+                               Style="{StaticResource SecondaryLabelStyle}"
+                               TextColor="{Binding PriorityColor}" />
+                        <Label Text="{Binding CreatedAt, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
+                               Style="{StaticResource SecondaryLabelStyle}" />
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+    </DataTemplate>
+</CollectionView.ItemTemplate>
         </CollectionView>
-        
 
     </Grid>
 </ContentPage>
